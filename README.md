@@ -1,6 +1,6 @@
 # keyframe
 
-Source for [tonyvideo.co](https://tonyvideo.co), my motion design, 3D and video editing portfolio.
+Source for [tonyvideo.co](https://tonyvideo.co), the tonymode portfolio: motion design, 3D animation and editing.
 
 Plain HTML, CSS and JavaScript with no build step, hosted on GitHub Pages.
 

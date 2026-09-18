@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Tony Radke / tonyvideo.co
+   tonymode / tonyvideo.co
    ========================================================================== */
 
 :root {
@@ -289,8 +289,17 @@ ul { list-style: none; margin: 0; padding: 0; }
 .card img {
   width: 100%; height: 100%;
   object-fit: cover;
-  transition: transform 0.9s var(--ease-out), filter 0.6s;
+  transition: transform 0.9s var(--ease-out), filter 0.6s var(--ease-out);
   filter: saturate(0.9);
+}
+/* dark scrim + scanline sweep over the thumbnail on hover */
+.card figure > .sweep {
+  position: absolute; inset: 0; z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(100deg, transparent 35%, rgba(255, 91, 46, 0.22) 48%, rgba(255, 255, 255, 0.12) 50%, transparent 62%) 120% 0 / 250% 100% no-repeat,
+    rgba(10, 10, 11, 0);
+  transition: background-color 0.5s;
 }
 
 /* play button + timecode overlay */
@@ -300,7 +309,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   width: 4.25rem; height: 4.25rem;
   margin: -2.125rem 0 0 -2.125rem;
   border-radius: 50%;
-  background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230a0a0b'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E") 56% 50% / 42% no-repeat;
+  background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230a0a0b'%3E%3Cpath d='M8 6v12l10-6z'/%3E%3C/svg%3E") center / 44% no-repeat;
   opacity: 0;
   transform: scale(0.6);
   transition: opacity 0.3s, transform 0.5s var(--ease-out);
@@ -308,6 +317,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 .card figure::after {
   content: counter(clip, decimal-leading-zero);
   position: absolute; left: 0.8rem; top: 0.75rem;
+  z-index: 2;
   padding: 0.3rem 0.5rem;
   border-radius: 3px;
   background: rgba(10, 10, 11, 0.7);
@@ -316,7 +326,13 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 .card a:hover img,
-.card a:focus-visible img { transform: scale(1.05); filter: saturate(1.1); }
+.card a:focus-visible img { transform: scale(1.08); filter: blur(5px) saturate(1.2) brightness(0.8); }
+.card a:hover .sweep,
+.card a:focus-visible .sweep {
+  background-color: rgba(10, 10, 11, 0.25);
+  animation: sweep 0.9s var(--ease-out);
+}
+@keyframes sweep { from { background-position: 120% 0; } to { background-position: -20% 0; } }
 .card a:hover figure::before,
 .card a:focus-visible figure::before { opacity: 1; transform: none; }
 
@@ -355,8 +371,6 @@ ul { list-style: none; margin: 0; padding: 0; }
 
 .about-list {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
   margin: 0;
   align-content: start;
 }
@@ -480,7 +494,6 @@ ul { list-style: none; margin: 0; padding: 0; }
   .timecode { display: none; }
   .grid { grid-template-columns: 1fr; }
   .card--feature { grid-column: auto; }
-  .about-list { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
   .hero { padding-bottom: 5rem; }
   .hero-title .line:nth-child(2) > span { -webkit-text-stroke-width: 1px; }
   .card figure::before {
