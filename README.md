@@ -21,7 +21,7 @@ assets/img/           favicon + social share image
    `convert thumb.jpg -resize 960x540 -quality 78 assets/thumbs/<slug>.webp`
 2. Copy an existing `<li class="card">` in `index.html` and set:
    - `data-id`: the YouTube video ID (unlisted is fine)
-   - `data-cat`: `motion`, `social` or `sports` (these drive the filter chips)
+   - `data-cat`: one or more of `product`, `motion`, `social`, `sports`, space-separated (these drive the filter chips)
    - the `href`, thumbnail path, tag, title and one-line description
 3. For the big tile, move `card--feature` to that card.
 

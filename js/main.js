@@ -61,6 +61,22 @@
   window.addEventListener("resize", onScroll);
   onScroll();
 
+  /* ---------- In-page links scroll without adding #section to the URL ---------- */
+
+  document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const target = document.querySelector(link.hash);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth" });
+      if (link.classList.contains("skip")) {
+        target.setAttribute("tabindex", "-1");
+        target.focus({ preventScroll: true });
+      }
+    });
+  });
+  if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+
   /* ---------- Highlight the nav link for the section in view ---------- */
 
   const navLinks = [...document.querySelectorAll(".nav nav a")];
@@ -98,7 +114,7 @@
         c.setAttribute("aria-pressed", active);
       });
       cards.forEach((card, i) => {
-        const show = filter === "all" || card.dataset.cat === filter;
+        const show = filter === "all" || card.dataset.cat.split(" ").includes(filter);
         card.classList.toggle("is-hidden", !show);
         card.classList.remove("is-entering");
         if (show && !reducedMotion) {
