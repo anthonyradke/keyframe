@@ -488,8 +488,12 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 @media (max-width: 640px) {
-  .nav { gap: 1rem; }
-  .nav nav { gap: 1.1rem; }
+  /* keep the brand and the three links on one line, clear of both edges */
+  .nav { gap: 0.75rem; padding: 1rem 1.25rem; }
+  .brand { font-size: 0.9rem; letter-spacing: 0.07em; white-space: nowrap; }
+  .brand .key { width: 0.45em; height: 0.45em; margin-right: 0.45em; }
+  .nav nav { gap: 0.95rem; }
+  .nav nav a { font-size: 0.66rem; letter-spacing: 0.05em; white-space: nowrap; }
   .timecode { display: none; }
   .grid { grid-template-columns: 1fr; }
   .card--feature { grid-column: auto; }
@@ -500,6 +504,13 @@ ul { list-style: none; margin: 0; padding: 0; }
     width: 2.6rem; height: 2.6rem; margin: 0;
     opacity: 1; transform: none;
   }
+}
+
+@media (max-width: 360px) {
+  .nav { gap: 0.5rem; padding: 1rem 1rem; }
+  .brand { font-size: 0.78rem; letter-spacing: 0.04em; }
+  .nav nav { gap: 0.7rem; }
+  .nav nav a { font-size: 0.6rem; letter-spacing: 0.03em; }
 }
 
 @media (prefers-reduced-motion: reduce) {
