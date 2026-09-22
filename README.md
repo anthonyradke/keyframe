@@ -1,49 +1,54 @@
 # keyframe
 
-Source for [tonyvideo.co](https://tonyvideo.co), my video portfolio (as tonymode): motion design, 3D animation and
-editing. Plain HTML, CSS and JavaScript with no build step, hosted on GitHub Pages.
+The code for [tonyvideo.co](https://tonyvideo.co), my video portfolio. I do motion design, 3D animation and
+editing under the name tonymode.
 
-The site borrows from an editing timeline. Scrolling moves a playhead across the top of the page, with a 24 fps
-timecode that maps the full page to one minute of footage. The hero plays one of five short loops, picked at
-random and never the same one twice in a row. With reduced motion or Data Saver on, it shows the still frame
-instead. Work cards filter by category and play in an in-page youtube-nocookie player, so the page doesn't load
-YouTube until someone presses play.
+It's plain HTML, CSS and JavaScript. No framework, no build step. GitHub Pages hosts it.
 
-## Layout
+## Details
+
+The design is based on a video editing timeline. As you scroll, a playhead moves across the top of the page
+and a timecode counts up, like scrubbing through a one minute clip.
+
+The background at the top plays one of five short video loops, picked at random. You won't get the same one
+twice in a row. If your device has reduced motion or data saver turned on, it shows a still image instead.
+
+Videos in the work section open in a player on the page. YouTube doesn't load until you hit play, which keeps
+the page fast.
+
+## Files
 
 ```
-index.html            the whole site: hero, work grid, about, contact
-css/style.css         styles
-js/main.js            hero loop, scroll playhead/timecode, filters, video player
-assets/loops/         hero background loops (mp4 + poster jpg), picked at random per visit
-assets/thumbs/        work thumbnails, 960x540 .webp
-assets/img/           favicon + social share image
+index.html       the whole site
+css/style.css    styles
+js/main.js       video loops, timeline, filters, player
+assets/loops/    background loops and their still frames
+assets/thumbs/   video thumbnails
+assets/img/      favicon and link preview image
 ```
 
 ## Adding a video
 
-1. Export a 1920x1080 thumbnail and convert it:
-   `convert thumb.jpg -resize 960x540 -quality 78 assets/thumbs/<slug>.webp`
-2. Copy an existing `<li class="card">` in `index.html` and set:
-   - `data-id`: the YouTube video ID (unlisted is fine)
-   - `data-cat`: one or more of `product`, `motion`, `social`, `sports`, space-separated (these drive the filter chips)
-   - the `href`, thumbnail path, tag, title and one-line description
-3. For the big tile, move `card--feature` to that card.
+1. Make a 960x540 thumbnail:
+   `convert thumb.jpg -resize 960x540 -quality 78 assets/thumbs/<name>.webp`
+2. Copy one of the `<li class="card">` blocks in `index.html` and change:
+   - `data-id` to the YouTube video ID. Unlisted videos work fine.
+   - `data-cat` to one or more of `product`, `motion`, `social`, `sports`. These power the filter buttons.
+   - The link, thumbnail, title and description.
+3. To make it the big featured tile, move the `card--feature` class onto it.
 
-Cards open in an in-page player (youtube-nocookie embed). Cmd/Ctrl-click opens YouTube directly.
+## Adding a background loop
 
-## Hero loops
-
-Re-encode any new loop small before adding it:
+Compress it first so the page stays light:
 
 ```
 ffmpeg -i in.mp4 -an -vf "scale=1280:-2,fps=30,format=yuv420p" -c:v libx264 -preset slow -crf 30 -movflags +faststart assets/loops/loop-6.mp4
 ffmpeg -ss 1 -i assets/loops/loop-6.mp4 -frames:v 1 -q:v 5 assets/loops/loop-6.jpg
 ```
 
-Then bump `LOOPS` in `js/main.js`.
+Then raise `LOOPS` in `js/main.js` by one.
 
-## Local preview
+## Running locally
 
 ```
 python3 -m http.server 8000
