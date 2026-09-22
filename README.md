@@ -1,8 +1,13 @@
 # keyframe
 
-Source for [tonyvideo.co](https://tonyvideo.co), the tonymode portfolio: motion design, 3D animation and editing.
+Source for [tonyvideo.co](https://tonyvideo.co), my video portfolio (as tonymode): motion design, 3D animation and
+editing. Plain HTML, CSS and JavaScript with no build step, hosted on GitHub Pages.
 
-Plain HTML, CSS and JavaScript with no build step, hosted on GitHub Pages.
+The site borrows from an editing timeline. Scrolling moves a playhead across the top of the page, with a 24 fps
+timecode that maps the full page to one minute of footage. The hero plays one of five short loops, picked at
+random and never the same one twice in a row. With reduced motion or Data Saver on, it shows the still frame
+instead. Work cards filter by category and play in an in-page youtube-nocookie player, so the page doesn't load
+YouTube until someone presses play.
 
 ## Layout
 
